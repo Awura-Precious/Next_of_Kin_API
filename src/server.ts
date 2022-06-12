@@ -37,5 +37,12 @@ const context = {
 app.listen(port, async () => {
 	const message = `Server is running in mode: ${env} at http://localhost:${port}`;
 	logger.info(message, { context });
-	logger.error('Intentional error log');
 });
+
+// REMOVE AFTER REVIEW: An interval logger to demonstrate the daily rotation
+// Let the server run continuously into the next day and you should see the new
+// log folder created automatically
+setInterval(() => {
+	logger.info('Intentional info log');
+	logger.error('Intentional error log');
+}, 300000); // Every 5 minutes
