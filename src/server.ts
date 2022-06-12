@@ -37,4 +37,5 @@ const context = {
 app.listen(port, async () => {
 	const message = `Server is running in mode: ${env} at http://localhost:${port}`;
 	logger.info(message, { context });
+	logger.error('Intentional error log');
 });

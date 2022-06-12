@@ -1,12 +1,26 @@
 import config from 'config';
 import winston, { format } from 'winston';
+import 'winston-daily-rotate-file';
 
-import { pretty } from './formats';
+import { pretty, json } from './formats';
 import * as options from './options';
 
 const transports: any = [
-	new winston.transports.File(options.combined),
-	new winston.transports.File(options.error),
+	// REMOVE AFTER REVIEW: We replace your file transports with winston-daily-rotate transports
+	// REMOVE AFTER REVIEW: new winston.transports.File(options.combined),
+	// REMOVE AFTER REVIEW: new winston.transports.File(options.error),
+	new winston.transports.DailyRotateFile({
+		filename: 'combined.log',
+		datePattern: 'YYYY-MM-DD',
+		dirname: 'logs/%DATE%',
+		...options.combined,
+	}),
+	new winston.transports.DailyRotateFile({
+		filename: 'error.log',
+		datePattern: 'YYYY-MM-DD',
+		dirname: 'logs/%DATE%',
+		...options.error,
+	}),
 ];
 
 // if console logging is enabled

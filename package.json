@@ -80,6 +80,7 @@
 		"morgan-json": "^1.1.0",
 		"uuid": "^8.3.2",
 		"winston": "^3.6.0",
+		"winston-daily-rotate-file": "^4.7.1",
 		"yup": "^0.32.11"
 	},
 	"lint-staged": {
