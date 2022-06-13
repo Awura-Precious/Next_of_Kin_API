@@ -1,21 +1,15 @@
 import logger from '../loggers/logger';
 
-const SMS = async (requestID: any, msisdn: string, text: string) => {
-	const context = {
-		user: 'SMS',
-		label: 'Send',
-		requestID,
-		request: {
-			cbs: {},
-			data: { msisdn, text },
-		},
-		response: {
-			data: {},
-			error: null,
-		},
-	};
+interface IRequest {
+	requestID: string;
+	msisdn: string;
+	text: string;
+}
 
-	logger.info(`Sending SMS: ${text}`, { context });
+const SMS = async (data: IRequest) => {
+	const { requestID, msisdn, text } = data;
+
+	return data;
 };
 
 export default SMS;

@@ -1,16 +1,11 @@
-import messages from '../messages/db.messages';
-
-class DBError extends Error {
+class DbError extends Error {
 	statusCode: number;
 
-	system: string;
-
-	constructor(message: string, system: string | null) {
-		super(message || messages.GENERAL_DB_ERROR);
-		this.system = system || 'BIOSIMREG';
+	constructor(message: string) {
+		super(message);
 		this.name = this.constructor.name;
 		this.statusCode = 500;
 	}
 }
 
-export default DBError;
+export default DbError;

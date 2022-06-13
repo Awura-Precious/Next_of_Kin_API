@@ -1,61 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import moment from 'moment';
 
-import HttpError from '../utils/errors/HttpError';
-import ValidationError from '../utils/errors/ValidationError';
-import messages from '../utils/messages/app.messages';
-import logger from '../utils/loggers/logger';
-import { systems } from '../utils/constants/variables';
-
-// eslint-disable-next-line
-const errorHandler = (error: any, req: Request, res: Response, _next: NextFunction) => {
-	const channelID: string = req.body.channelID || req.query.channelID;
-
-	const context = {
-		user: 'ErrorHandler',
-		label: error.system,
-		requestID: req.body?.requestID || req.query?.requestID,
-		endpoint: req.originalUrl,
-		channelID: channelID,
-		request: {
-			body: req.body,
-			query: req.query,
-			params: req.params,
-		},
-		error: { ...error },
-	};
-
-	const response = {
-		timestamp: moment(),
-		requestID: req.body?.requestID || req.query?.requestID,
-		system: error.system || systems.BIOSIMREG,
-		message: error.message,
-	};
-
-	// HTTP Handler
-	if (error instanceof HttpError) {
-		logger.warn(error.message, { context });
-		return channelID === 'ussd'
-			? res.send(response.message)
-			: res.status(error.statusCode).json(response);
-	}
-
-	// Validation error Handler
-	if (error instanceof ValidationError) {
-		logger.warn(error.message, { context });
-		return channelID === 'ussd'
-			? res.send(response.message)
-			: res.status(error.statusCode).json(response);
-	}
-
-	// ! Generic Error handler
-	response.message = messages.TECHNICAL_ISSUE;
-	error.statusCode = 500;
-	logger.error(error.message, { context });
-
-	return channelID === 'ussd'
-		? res.send(response.message)
-		: res.status(error.statusCode).json(response);
-};
+// eslint-disable-next-line no-unused-vars
+const errorHandler = (error: any, req: Request, res: Response, _: NextFunction) =>
+	res.send(error.message);
 
 export default errorHandler;
