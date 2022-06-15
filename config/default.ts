@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-	port: process.env.PORT,
-	env: process.env.NODE_ENV,
+	port: process.env.PORT || 5000,
+	env: process.env.NODE_ENV || 'development',
 	logger: {
 		console: true,
-		dirname: 'logs/%DATE%',
-		datePattern: 'YYYY-MM-DD',
+		dirname: `${process.env.LOG_DIRECTORY}logs/%DATE%`,
+		datePattern: 'YYYYMMDD',
 	},
 };
 

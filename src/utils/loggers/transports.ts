@@ -1,25 +1,26 @@
 import config from 'config';
-import winston, { format } from 'winston';
+import winston from 'winston';
 import 'winston-daily-rotate-file';
 
-import { pretty } from './formats';
-import * as options from './options';
+import * as logFormatter from './formats';
 
 const datePattern = config.get('logger.datePattern') as string;
 const dirname = config.get('logger.dirname') as string;
 
-const transports: any = [
+const transports: Array<any> = [
 	new winston.transports.DailyRotateFile({
+		level: 'info',
 		filename: 'combined.log',
 		datePattern,
 		dirname,
-		...options.combined,
+		format: winston.format.combine(logFormatter.json),
 	}),
 	new winston.transports.DailyRotateFile({
+		dirname,
 		filename: 'error.log',
 		datePattern,
-		dirname,
-		...options.error,
+		level: 'error',
+		format: winston.format.combine(logFormatter.error),
 	}),
 ];
 
@@ -28,7 +29,7 @@ if (config.get('logger.console')) {
 	transports.push(
 		new winston.transports.Console({
 			level: 'verbose',
-			format: format.combine(pretty, format.colorize({ all: true })),
+			format: winston.format.combine(logFormatter.pretty, winston.format.colorize({ all: true })),
 		})
 	);
 }

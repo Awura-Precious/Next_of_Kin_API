@@ -12,9 +12,8 @@ export const pretty = format.printf((log: any): string => {
 export const json = format.printf((log: any): string => {
 	const schema: any = {
 		timestamp: log.timestamp,
-		level: log.level,
 		requestID: log?.context?.requestID,
-		user: log?.context?.user,
+		level: log.level,
 		label: log?.context?.label,
 		message: log.message,
 		context: {
