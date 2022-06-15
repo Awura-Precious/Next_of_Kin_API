@@ -7,20 +7,21 @@ import morgan from 'morgan';
 
 import routes from './routes';
 import logger from './utils/loggers/logger';
-import requestID from './middlewares/requestID.middleware';
+import requestID from './middlewares/handleRequestID.middleware';
 import errorHandler from './middlewares/errorHandler.middleware';
 
 const port: number = config.get('port');
 const env: string = config.get('env');
+
 const app = express();
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(hpp());
-app.use('/api/v1', routes);
+app.use('/api', routes);
 app.use(requestID);
 app.use(errorHandler);
 
