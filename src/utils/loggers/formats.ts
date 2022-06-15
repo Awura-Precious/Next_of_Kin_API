@@ -2,24 +2,22 @@ import { format } from 'winston';
 
 // For console logs
 export const pretty = format.printf((log: any): string => {
-	const { timestamp, level, message, context } = log;
-	return `[${timestamp}] [${level.toUpperCase()}] [${context?.user || ''} - ${
-		context?.label || ''
-	}]: ${message}`;
+	const { timestamp, level, message, requestID } = log;
+	return `[${timestamp}] [${level.toUpperCase()}] [${requestID}]: ${message}`;
 });
 
 // For functional logs
 export const json = format.printf((log: any): string => {
 	const schema: any = {
 		timestamp: log.timestamp,
-		requestID: log?.context?.requestID,
 		level: log.level,
-		label: log?.context?.label,
 		message: log.message,
 		context: {
-			requestID: log?.context?.requestID,
-			user: log?.context?.user,
-			...log?.context,
+			requestID: log?.requestID,
+			user: log?.user,
+			label: log?.label,
+			request: log?.request,
+			response: log?.response,
 		},
 	};
 
@@ -30,20 +28,20 @@ export const json = format.printf((log: any): string => {
 export const error = format.printf((log: any): string => {
 	const schema: any = {
 		timestamp: log.timestamp,
-		level: log.level,
-		requestID: log?.context?.requestID,
-		user: log?.context?.user,
-		label: log?.context?.label,
 		message: log.message,
+		level: log.level,
 		context: {
-			requestID: log.context?.requestID,
-			user: log.context?.user,
+			user: log?.user,
+			requestID: log?.requestID,
+			label: log?.label,
+			request: log?.request,
+			response: log?.response,
 			error: {
-				statusCode: log.context?.statusCode,
-				request: log.context?.request,
-				trace: {
-					stack: log.context?.stack,
-				},
+				message: log?.error?.message,
+				name: log?.error?.name,
+				statusCode: log?.error?.statusCode,
+				data: log?.error?.response?.data,
+				stack: log?.error?.stack,
 			},
 		},
 	};
