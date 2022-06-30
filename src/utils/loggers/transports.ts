@@ -29,8 +29,11 @@ if (config.get('logger.console')) {
 	transports.push(
 		new winston.transports.Console({
 			level: 'verbose',
-			format: winston.format.combine(logFormatter.pretty, winston.format.colorize({ all: true })),
-		})
+			format: winston.format.combine(
+				logFormatter.pretty,
+				winston.format.colorize({ all: true }),
+			),
+		}),
 	);
 }
 

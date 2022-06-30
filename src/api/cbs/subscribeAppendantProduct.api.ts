@@ -10,7 +10,7 @@ import logger from '../../utils/loggers/logger';
 const URL: string = config.get('api.cbs.url');
 const USERNAME: string = config.get('api.cbs.username');
 const PASSWORD: string = config.get('api.cbs.password');
-const SUCCESS_CODE: string = '405000000';
+const SUCCESS_CODE = '405000000';
 
 interface ISubscribeProductRequest {
 	requestID: string;
@@ -66,16 +66,17 @@ const subscribeProductApi = async (input: ISubscribeProductRequest) => {
    `;
 
 	const soapResponse = await axios.post(URL, soapRequest, soapHeader);
-	const jsonResponse: SubscribeAppendantProductResponse = await xml2js.parseStringPromise(
-		soapResponse.data
-	);
+	const jsonResponse: SubscribeAppendantProductResponse =
+		await xml2js.parseStringPromise(soapResponse.data);
 
 	context.response = { soapResponse: soapResponse.data, jsonResponse };
 	const responseData = jsonResponse['soapenv:Envelope']['soapenv:Body'][0];
 	const resultCode =
-		responseData.SubscribeAppendantProductResultMsg[0].ResultHeader[0].ResultCode[0]._;
+		responseData.SubscribeAppendantProductResultMsg[0].ResultHeader[0]
+			.ResultCode[0]._;
 	const resultDesc =
-		responseData.SubscribeAppendantProductResultMsg[0].ResultHeader[0].ResultDesc[0]._;
+		responseData.SubscribeAppendantProductResultMsg[0].ResultHeader[0]
+			.ResultDesc[0]._;
 
 	// ! Not successful
 	if (resultCode !== SUCCESS_CODE) {

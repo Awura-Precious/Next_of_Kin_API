@@ -1,27 +1,27 @@
 {
 	"env": {
-		"browser": true,
 		"es2021": true
 	},
-	"extends": ["airbnb-base", "airbnb-typescript/base", "prettier"],
-	"plugins": ["prettier", "@typescript-eslint"],
+	"extends": ["plugin:@typescript-eslint/recommended"],
+	"plugins": ["@typescript-eslint"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		"ecmaVersion": "latest",
+		"ecmaVersion": 2021,
 		"sourceType": "module",
-		"project": "./tsconfig.json"
+		"ecmaFeatures": {
+			"jsx": true
+		}
 	},
 	"rules": {
-		"@typescript-eslint/no-unused-vars": "off",
-		"prettier/prettier": "error",
-		"no-unused-vars": "warn",
-		"no-console": "warn",
-		"func-names": "off",
-		"no-process-exit": "off",
-		"object-shorthand": "off",
-		"class-methods-use-this": "off",
-		"import/prefer-default-export": "off",
-		"no-param-reassign": "off",
-		"prefer-destructuring": "off"
+		"no-console": "off",
+		"semi": ["error", "always"],
+		"handle-callback-err": "error",
+		"no-async-promise-executor": "off",
+		"@typescript-eslint/camelcase": "off",
+		"@typescript-eslint/no-var-requires": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-use-before-define": "off",
+		"@typescript-eslint/interface-name-prefix": "off",
+		"@typescript-eslint/ban-types": "off"
 	}
 }

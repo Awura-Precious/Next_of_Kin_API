@@ -4,7 +4,8 @@ import { Request, Response, NextFunction } from 'express';
 import ValidationError from '../utils/errors/ValidationError';
 
 const validator =
-	(schema: AnySchema) => async (req: Request, res: Response, next: NextFunction) => {
+	(schema: AnySchema) =>
+	async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			await schema.validate({
 				body: req.body,

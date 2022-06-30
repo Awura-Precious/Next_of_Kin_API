@@ -5,7 +5,11 @@ class HttpError extends Error {
 
 	context: IContext | null;
 
-	constructor(message: string, statusCode: number | 500, context: IContext | null = null) {
+	constructor(
+		message: string,
+		statusCode: number | 500,
+		context: IContext | null = null,
+	) {
 		super(message);
 
 		this.name = 'HttpError';

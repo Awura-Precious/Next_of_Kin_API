@@ -1,5 +1,3 @@
-import logger from '../loggers/logger';
-
 interface IRequest {
 	requestID: string;
 	msisdn: string;
@@ -7,8 +5,6 @@ interface IRequest {
 }
 
 const SMS = async (data: IRequest) => {
-	const { requestID, msisdn, text } = data;
-
 	return data;
 };
 
