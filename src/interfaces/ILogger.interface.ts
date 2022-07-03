@@ -3,7 +3,7 @@ export interface IContext {
 	label: string;
 	requestID: string;
 	message?: string;
-	request: object;
+	request: object | null;
 	response?: object | null;
 	error?: object;
 }

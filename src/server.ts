@@ -1,14 +1,14 @@
-import config from 'config';
+import hpp from 'hpp';
 import cors from 'cors';
+import config from 'config';
 import express from 'express';
 import helmet from 'helmet';
-import hpp from 'hpp';
 import morgan from 'morgan';
 
 import routes from './routes';
 import logger from './utils/loggers/logger';
-import handleRequestID from './middlewares/handleRequestID.middleware';
 import errorHandler from './middlewares/errorHandler.middleware';
+import { IContext } from './interfaces/ILogger.interface';
 
 const port: number = config.get('port');
 const env: string = config.get('env');
@@ -20,12 +20,19 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(handleRequestID);
 app.use('/api', routes);
 app.use(errorHandler);
 
 // start express server
 app.listen(port, async () => {
 	const message = `Server is running in mode: ${env} at http://localhost:${port}`;
-	logger.verbose(message);
+
+	const context: IContext = {
+		user: 'E-LEVY',
+		label: 'Startup',
+		requestID: Date.now().toString(),
+		request: null,
+	};
+
+	logger.verbose(message, context);
 });

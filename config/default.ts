@@ -7,7 +7,7 @@ const config = {
 	env: process.env.NODE_ENV || 'development',
 	logger: {
 		console: true,
-		dirname: `${process.env.LOG_DIRECTORY}logs/%DATE%`,
+		dirname: `${process.env.LOG_DIRECTORY || ''}logs/%DATE%`,
 		datePattern: 'YYYYMMDD',
 	},
 };

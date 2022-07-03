@@ -2,18 +2,18 @@ import { format } from 'winston';
 
 // For console logs
 export const pretty = format.printf((log: any): string => {
-	const { timestamp, level, message, requestID } = log;
-	return `[${timestamp}] [${level.toUpperCase()}] [${requestID}]: ${message}`;
+	const { timestamp, level, message, requestID, user, label } = log;
+	return `[${timestamp}][${level.toUpperCase()}][${requestID}]: [${user} -> ${label}] ${message}`;
 });
 
 // For functional logs
 export const json = format.printf((log: any): string => {
 	const schema: any = {
 		timestamp: log.timestamp,
+		requestID: log?.requestID,
 		level: log.level,
 		message: log.message,
 		context: {
-			requestID: log?.requestID,
 			user: log?.user,
 			label: log?.label,
 			request: log?.request,
@@ -28,11 +28,11 @@ export const json = format.printf((log: any): string => {
 export const error = format.printf((log: any): string => {
 	const schema: any = {
 		timestamp: log.timestamp,
+		requestID: log?.requestID,
 		message: log.message,
 		level: log.level,
 		context: {
 			user: log?.user,
-			requestID: log?.requestID,
 			label: log?.label,
 			request: log?.request,
 			response: log?.response,

@@ -1,4 +1,4 @@
-import { IContext } from '../../interfaces/ILogger.interface';
+import { IContext } from '../../interfaces/Logger.interface';
 
 class HttpError extends Error {
 	statusCode: number;
@@ -7,13 +7,12 @@ class HttpError extends Error {
 
 	constructor(
 		message: string,
-		statusCode: number | 500,
+		statusCode: number,
 		context: IContext | null = null,
 	) {
 		super(message);
-
 		this.name = 'HttpError';
-		this.statusCode = statusCode;
+		this.statusCode = statusCode || 500;
 		this.context = context;
 	}
 }

@@ -1,4 +1,4 @@
-import { IContext } from '../../interfaces/ILogger.interface';
+import { IContext } from '../../interfaces/Logger.interface';
 import messages from '../../messages/db.messages';
 
 class DbError extends Error {
@@ -8,7 +8,6 @@ class DbError extends Error {
 
 	constructor(message: string, context: IContext) {
 		super(message || messages.GENERAL_DB_ERROR);
-
 		this.name = 'DbError';
 		this.context = context;
 		this.statusCode = 500;
