@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import { IContext } from '../interfaces/ILogger.interface';
 import appMessages from '../messages/app.messages';
-import DbError from '../utils/errors/DbError';
+import DbError from '../utils/errors/DBError';
 import GenericError from '../utils/errors/GenericError';
 import HttpError from '../utils/errors/HttpError';
 import ValidationError from '../utils/errors/ValidationError';
