@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { IContext } from '../interfaces/ILogger.interface';
 import appMessages from '../messages/app.messages';
-import DbError from '../utils/errors/DBError';
 import GenericError from '../utils/errors/GenericError';
 import HttpError from '../utils/errors/HttpError';
 import ValidationError from '../utils/errors/ValidationError';
@@ -33,11 +32,6 @@ const errorMiddleware = async (
 
 	if (error instanceof HttpError || error instanceof ValidationError) {
 		logger.warn(error.message, context);
-		return res.status(error.statusCode).json(response);
-	}
-
-	if (error instanceof GenericError || error instanceof DbError) {
-		logger.error(error.message, context);
 		return res.status(error.statusCode).json(response);
 	}
 
