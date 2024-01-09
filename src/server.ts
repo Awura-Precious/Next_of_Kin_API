@@ -28,7 +28,7 @@ app.listen(port, async () => {
 	const message = `Server is running in mode: ${env} at http://localhost:${port}`;
 
 	const context: IContext = {
-		user: 'E-LEVY',
+		user: 'ATM NEXT_OF_KIN',
 		label: 'Startup',
 		requestID: Date.now().toString(),
 		request: null,
